@@ -86,6 +86,12 @@ input::placeholder {
   cursor: pointer;
 }
 
+.copyright {
+  position: absolute;
+  bottom: 0%;
+  font-size: 1.2rem;
+}
+
 /* TOGGLES */
 
 .input-placeholder::placeholder {
