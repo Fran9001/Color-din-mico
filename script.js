@@ -5,6 +5,7 @@ const cambiarColor = document.getElementById("cambiarColor");
 const elementosh2 = document.querySelectorAll("h2");
 const colorRandom = document.getElementById("colorRandom");
 const botonReset = document.getElementById("botonReset");
+const copyright = document.getElementById("copyright");
 const body = document.body;
 
 const reiniciarEstilos = () => {
@@ -19,6 +20,7 @@ const reiniciarEstilos = () => {
   botonReset.style.color = "white";
   botonReset.style.backgroundColor = "#000000ad";
   inputColor.value = "";
+  copyright.style.color = 'black';
   elementosh2.forEach((h2) => {
     h2.style.color = "black";
   });
@@ -42,6 +44,7 @@ const modoOscuro = (value) => {
     colorRandom.classList.add("cambiar-color-toggle");
     botonReset.style.color = "black";
     botonReset.style.backgroundColor = "white";
+    copyright.style.color = 'white';
     elementosh2.forEach((h2) => {
       h2.style.color = "white";
     });
