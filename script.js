@@ -2,9 +2,26 @@ const colorHexa = document.getElementById("colorHexa");
 const colorPicker = document.getElementById("colorPicker");
 const inputColor = document.getElementById("nuevoColor");
 const cambiarColor = document.getElementById("cambiarColor");
-const h2Elements = document.querySelectorAll("h2");
-const colorRandom = document.getElementById('colorRandom');
+const elementosh2 = document.querySelectorAll("h2");
+const colorRandom = document.getElementById("colorRandom");
+const botonReset = document.getElementById("botonReset");
 const body = document.body;
+
+const reiniciarEstilos = () => {
+  colorHexa.style.color = "black";
+  inputColor.style.backgroundColor = "#00000065";
+  inputColor.classList.remove("input-placeholder");
+  cambiarColor.classList.remove("cambiar-color-toggle");
+  cambiarColor.classList.add("cambiar-color");
+  colorRandom.classList.remove("cambiar-color-toggle");
+  colorRandom.classList.add("cambiar-color");
+  inputColor.style = "white";
+  botonReset.style.color = 'white';
+  botonReset.style.backgroundColor = '#000000ad';
+  elementosh2.forEach((h2) => {
+    h2.style.color = "black";
+  });
+};
 
 const modoOscuro = (value) => {
   let r = parseInt(value.slice(1, 3), 16);
@@ -21,30 +38,38 @@ const modoOscuro = (value) => {
     cambiarColor.classList.add("cambiar-color-toggle");
     colorRandom.classList.remove("cambiar-color");
     colorRandom.classList.add("cambiar-color-toggle");
-    h2Elements.forEach(function (h2) {
+    botonReset.style.color = 'black';
+    botonReset.style.backgroundColor = 'white';
+    elementosh2.forEach((h2) => {
       h2.style.color = "white";
     });
   } else {
-    colorHexa.style.color = "black";
-    inputColor.style.backgroundColor = "#00000065";
-    inputColor.classList.remove("input-placeholder");
-    cambiarColor.classList.remove("cambiar-color-toggle");
-    cambiarColor.classList.add("cambiar-color");
-    colorRandom.classList.remove("cambiar-color-toggle");
-    colorRandom.classList.add("cambiar-color");
-    inputColor.style = "white";
-    h2Elements.forEach(function (h2) {
-      h2.style.color = "black";
-    });
+    reiniciarEstilos();
   }
 };
 
 const hexRandom = () => {
-    return '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
-}
+  return (
+    "#" +
+    Math.floor(Math.random() * 16777215)
+      .toString(16)
+      .padStart(6, "0")
+  );
+};
 
 cambiarColor.addEventListener("click", () => {
-  let inputValue = inputColor.value;
+  let inputValue = inputColor.value.trim();
+  if (inputValue === "") {
+    colorHexa.innerText = "Ingresa un color válido";
+    body.style.backgroundColor = "red";
+    colorPicker.value = "black";
+    setTimeout(() => {
+      colorHexa.innerText = "Colores Dinámicos";
+      body.style.backgroundColor = "#f0f0f0";
+    }, 2000);
+    reiniciarEstilos();
+    return;
+  }
   body.style.backgroundColor = inputValue;
   colorHexa.innerText = inputValue;
   inputColor.value = "";
@@ -59,10 +84,19 @@ colorPicker.addEventListener("input", () => {
   modoOscuro(pickerValue);
 });
 
-colorRandom.addEventListener('click', ()=>{
+colorRandom.addEventListener("click", () => {
   let colorRandom = hexRandom();
   body.style.backgroundColor = colorRandom;
   colorHexa.innerText = colorRandom;
   colorPicker.value = colorRandom;
   modoOscuro(colorRandom);
-})
+});
+
+botonReset.addEventListener("click", () => {
+  colorHexa.innerText = "Colores Dinámicos";
+  body.style.backgroundColor = "#f0f0f0";
+  colorPicker.value = "black";
+  reiniciarEstilos();
+});
+
+

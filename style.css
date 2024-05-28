@@ -50,6 +50,7 @@ input::placeholder {
   height: 30px;
   padding: 0;
   width: 220px;
+  cursor: pointer;
 }
 
 .cambiar-color {
@@ -72,6 +73,17 @@ input::placeholder {
 .color-random {
   width: 175px;
   margin-top: 30px;
+}
+
+.bi {
+  padding: 5px;
+  margin-top: 10px;
+  font-size: 1.5rem;
+  font-weight: bolder;
+  color: white;
+  background-color: #000000ad;
+  border-radius: 100%;
+  cursor: pointer;
 }
 
 /* TOGGLES */
