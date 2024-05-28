@@ -3,6 +3,7 @@ const colorPicker = document.getElementById("colorPicker");
 const inputColor = document.getElementById("nuevoColor");
 const cambiarColor = document.getElementById("cambiarColor");
 const h2Elements = document.querySelectorAll("h2");
+const colorRandom = document.getElementById('colorRandom');
 const body = document.body;
 
 const modoOscuro = (value) => {
@@ -18,6 +19,8 @@ const modoOscuro = (value) => {
     inputColor.classList.add("input-placeholder");
     cambiarColor.classList.remove("cambiar-color");
     cambiarColor.classList.add("cambiar-color-toggle");
+    colorRandom.classList.remove("cambiar-color");
+    colorRandom.classList.add("cambiar-color-toggle");
     h2Elements.forEach(function (h2) {
       h2.style.color = "white";
     });
@@ -27,12 +30,18 @@ const modoOscuro = (value) => {
     inputColor.classList.remove("input-placeholder");
     cambiarColor.classList.remove("cambiar-color-toggle");
     cambiarColor.classList.add("cambiar-color");
+    colorRandom.classList.remove("cambiar-color-toggle");
+    colorRandom.classList.add("cambiar-color");
     inputColor.style = "white";
     h2Elements.forEach(function (h2) {
       h2.style.color = "black";
     });
   }
 };
+
+const hexRandom = () => {
+    return '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+}
 
 cambiarColor.addEventListener("click", () => {
   let inputValue = inputColor.value;
@@ -48,3 +57,10 @@ colorPicker.addEventListener("input", () => {
   colorHexa.innerText = pickerValue;
   modoOscuro(pickerValue);
 });
+
+colorRandom.addEventListener('click', ()=>{
+  let colorRandom = hexRandom();
+  body.style.backgroundColor = colorRandom;
+  colorHexa.innerText = colorRandom;
+  modoOscuro(colorRandom);
+})
