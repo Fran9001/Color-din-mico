@@ -20,7 +20,7 @@ const reiniciarEstilos = () => {
   botonReset.style.color = "white";
   botonReset.style.backgroundColor = "#000000ad";
   inputColor.value = "";
-  copyright.style.color = 'black';
+  copyright.style.color = "black";
   elementosh2.forEach((h2) => {
     h2.style.color = "black";
   });
@@ -44,7 +44,7 @@ const modoOscuro = (value) => {
     colorRandom.classList.add("cambiar-color-toggle");
     botonReset.style.color = "black";
     botonReset.style.backgroundColor = "white";
-    copyright.style.color = 'white';
+    copyright.style.color = "white";
     elementosh2.forEach((h2) => {
       h2.style.color = "white";
     });
