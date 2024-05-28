@@ -48,6 +48,7 @@ cambiarColor.addEventListener("click", () => {
   body.style.backgroundColor = inputValue;
   colorHexa.innerText = inputValue;
   inputColor.value = "";
+  colorPicker.value = inputValue;
   modoOscuro(inputValue);
 });
 
@@ -62,5 +63,6 @@ colorRandom.addEventListener('click', ()=>{
   let colorRandom = hexRandom();
   body.style.backgroundColor = colorRandom;
   colorHexa.innerText = colorRandom;
+  colorPicker.value = colorRandom;
   modoOscuro(colorRandom);
 })
