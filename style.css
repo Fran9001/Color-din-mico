@@ -13,6 +13,8 @@ body {
 }
 
 .color-hexa {
+  word-wrap: break-word;
+  width: 100%;
   margin: 0;
   font-size: 4.5rem;
 }
