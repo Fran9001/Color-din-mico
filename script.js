@@ -16,8 +16,9 @@ const reiniciarEstilos = () => {
   colorRandom.classList.remove("cambiar-color-toggle");
   colorRandom.classList.add("cambiar-color");
   inputColor.style = "white";
-  botonReset.style.color = 'white';
-  botonReset.style.backgroundColor = '#000000ad';
+  botonReset.style.color = "white";
+  botonReset.style.backgroundColor = "#000000ad";
+  inputColor.value = "";
   elementosh2.forEach((h2) => {
     h2.style.color = "black";
   });
@@ -33,13 +34,14 @@ const modoOscuro = (value) => {
   if (luminancia < 0.18) {
     colorHexa.style.color = "white";
     inputColor.style.backgroundColor = "white";
+    inputColor.style.color = "black";
     inputColor.classList.add("input-placeholder");
     cambiarColor.classList.remove("cambiar-color");
     cambiarColor.classList.add("cambiar-color-toggle");
     colorRandom.classList.remove("cambiar-color");
     colorRandom.classList.add("cambiar-color-toggle");
-    botonReset.style.color = 'black';
-    botonReset.style.backgroundColor = 'white';
+    botonReset.style.color = "black";
+    botonReset.style.backgroundColor = "white";
     elementosh2.forEach((h2) => {
       h2.style.color = "white";
     });
@@ -57,10 +59,16 @@ const hexRandom = () => {
   );
 };
 
+const hexPattern = /^#([0-9A-F]{3}|[0-9A-F]{4}|[0-9A-F]{6}|[0-9A-F]{8})$/i;
+const rgbPattern =
+  /^rgb\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*\)$/i;
+const hslPattern =
+  /^hsl\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})%\s*,\s*([0-9]{1,3})%\s*\)$/i;
+
 cambiarColor.addEventListener("click", () => {
   let inputValue = inputColor.value.trim();
   if (inputValue === "") {
-    colorHexa.innerText = "Ingresa un color válido";
+    colorHexa.innerText = "Ingresa un color";
     body.style.backgroundColor = "red";
     colorPicker.value = "black";
     setTimeout(() => {
@@ -70,6 +78,23 @@ cambiarColor.addEventListener("click", () => {
     reiniciarEstilos();
     return;
   }
+
+  if (
+    !hexPattern.test(inputValue) &&
+    !rgbPattern.test(inputValue) &&
+    !hslPattern.test(inputValue)
+  ) {
+    colorHexa.innerText = "Color ingresado inválido";
+    body.style.backgroundColor = "red";
+    colorPicker.value = "black";
+    setTimeout(() => {
+      colorHexa.innerText = "Colores Dinámicos";
+      body.style.backgroundColor = "#f0f0f0";
+    }, 2000);
+    reiniciarEstilos();
+    return;
+  }
+
   body.style.backgroundColor = inputValue;
   colorHexa.innerText = inputValue;
   inputColor.value = "";
@@ -98,5 +123,3 @@ botonReset.addEventListener("click", () => {
   colorPicker.value = "black";
   reiniciarEstilos();
 });
-
-
