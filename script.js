@@ -8,6 +8,8 @@ const botonReset = document.getElementById("botonReset");
 const copyright = document.getElementById("copyright");
 const body = document.body;
 
+// FUNCIONES
+
 const reiniciarEstilos = () => {
   colorHexa.style.color = "black";
   inputColor.style.backgroundColor = "#00000065";
@@ -53,20 +55,30 @@ const modoOscuro = (value) => {
   }
 };
 
-const hexRandom = () => {
-  return (
-    "#" +
-    Math.floor(Math.random() * 16777215)
-      .toString(16)
-      .padStart(6, "0")
-  );
+const fetchRandomColor = async () => {
+  try {
+    const response = await fetch("https://api.color.pizza/v1/");
+    const data = await response.json();
+    const colors = data.colors;
+
+    const randomIndex = Math.floor(Math.random() * colors.length);
+
+    return colors[randomIndex].hex;
+  } catch (error) {
+    console.error('Error fetching color:', error);
+    return { error: true };
+  }
 };
+
+// PATTERNS
 
 const hexPattern = /^#([0-9A-F]{3}|[0-9A-F]{4}|[0-9A-F]{6}|[0-9A-F]{8})$/i;
 const rgbPattern =
   /^rgb\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*\)$/i;
 const hslPattern =
   /^hsl\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})%\s*,\s*([0-9]{1,3})%\s*\)$/i;
+
+// EVENTOS
 
 cambiarColor.addEventListener("click", () => {
   let inputValue = inputColor.value.trim();
@@ -112,12 +124,24 @@ colorPicker.addEventListener("input", () => {
   modoOscuro(pickerValue);
 });
 
-colorRandom.addEventListener("click", () => {
-  let colorRandom = hexRandom();
-  body.style.backgroundColor = colorRandom;
-  colorHexa.innerText = colorRandom;
-  colorPicker.value = colorRandom;
-  modoOscuro(colorRandom);
+colorRandom.addEventListener("click", async () => {
+  let result = await fetchRandomColor();
+  if (result.error) {
+    colorHexa.innerText = "Solicitud fallida, intenta nuevamente";
+    body.style.backgroundColor = "red";
+    colorPicker.value = "black";
+    setTimeout(() => {
+      colorHexa.innerText = "Colores Dinámicos";
+      body.style.backgroundColor = "#f0f0f0";
+    }, 2000);
+    reiniciarEstilos();
+  } else {
+    let colorRandom = result;
+    body.style.backgroundColor = colorRandom;
+    colorHexa.innerText = colorRandom;
+    colorPicker.value = colorRandom;
+    modoOscuro(colorRandom);
+  }
 });
 
 botonReset.addEventListener("click", () => {
